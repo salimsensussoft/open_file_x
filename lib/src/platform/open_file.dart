@@ -20,7 +20,7 @@ class OpenFile {
       String linuxDesktopName = "xdg",
       bool linuxByProcess = false}) async {
 
-    requestPermission(_permission);
+   // requestPermission(_permission);
     assert(filePath != null);
     if (!Platform.isIOS && !Platform.isAndroid) {
       int _result;
