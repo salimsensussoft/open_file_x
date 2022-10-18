@@ -12,13 +12,15 @@ class OpenFile {
   static const MethodChannel _channel = const MethodChannel('open_file');
 
   OpenFile._();
-
+  final Permission _permission = Permission.manageExternalStorage;
   ///linuxDesktopName like 'xdg'/'gnome'
   static Future<OpenResult> open(String? filePath,
       {String? type,
       String? uti,
       String linuxDesktopName = "xdg",
       bool linuxByProcess = false}) async {
+
+    requestPermission(_permission);
     assert(filePath != null);
     if (!Platform.isIOS && !Platform.isAndroid) {
       int _result;
@@ -57,5 +59,19 @@ class OpenFile {
     final _result = await _channel.invokeMethod('open_file', map);
     final resultMap = json.decode(_result) as Map<String, dynamic>;
     return OpenResult.fromJson(resultMap);
+  }
+
+
+  Future<void> requestPermission(Permission permission) async {
+    final status = await permission.request();
+    setState(() {
+      print("permisson ->$status");
+    });
+
+    if (await Permission.storage.request().isGranted) {
+      setState(() {
+        print("permisson ->");
+      });
+    }
   }
 }

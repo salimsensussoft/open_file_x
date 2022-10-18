@@ -6,6 +6,7 @@ dependencies:
   flutter:
     sdk: flutter
   ffi: ^2.0.1
+  permission_handler:
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
